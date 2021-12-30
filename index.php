@@ -3,7 +3,7 @@ $is_auth = rand(0, 1);
 
 $user_name = 'Макс'; // укажите здесь ваше имя
 $nav_list_items = ['Доски и лыжи', 'Крепления', 'Ботинки', 'Одежда', 'Инструменты', 'Разное'];
-$lots__list_items = [
+$lots_list_items = [
     [
         'name' => '2014 Rossignol District Snowboard',
         'category' => 'Доски и лыжи',
@@ -41,6 +41,16 @@ $lots__list_items = [
         'img_url' => 'img/lot-6.jpg',
     ],
 ];
+
+function price_transform($price)
+{
+    $price_ceiled = ceil($price);
+    if ($price_ceiled >= 1000) {
+        return number_format($price_ceiled, 0, '', ' ') . ' ' . '₽';
+    } else {
+        return $price_ceiled . ' ' . '₽';
+    }
+}
 
 ?>
 <!DOCTYPE html>
@@ -113,7 +123,7 @@ $lots__list_items = [
             <ul class="lots__list">
                 <!--заполните этот список из массива с товарами-->
 
-                <?php foreach ($lots__list_items as $key => $val): ?>
+                <?php foreach ($lots_list_items as $key => $val): ?>
                     <li class="lots__item lot">
                         <div class="lot__image">
                             <img src="<?= $val['img_url']; ?>" width="350" height="260" alt="">
@@ -125,7 +135,7 @@ $lots__list_items = [
                             <div class="lot__state">
                                 <div class="lot__rate">
                                     <span class="lot__amount">Стартовая цена</span>
-                                    <span class="lot__cost"><?= $val['price']; ?><b class="rub">р</b></span>
+                                    <span class="lot__cost"><?= price_transform($val['price']); ?></span>
                                 </div>
                                 <div class="lot__timer timer">
                                     12:23
